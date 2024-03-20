@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import tech.chillo.sa.entites.Client;
 import tech.chillo.sa.repository.ClientRepository;
 
+import java.util.List;
+
 @Service
 public class ClientService {
 private ClientRepository clientRepository;
@@ -15,5 +17,8 @@ private ClientRepository clientRepository;
 
     public void creer(Client client) {
         this.clientRepository.save(client);
+    }
+    public List<Client>recherche(){
+        return this.clientRepository.findAll();
     }
 }
