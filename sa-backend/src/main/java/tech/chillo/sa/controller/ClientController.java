@@ -29,5 +29,9 @@ public class ClientController  {
     public List<Client>rechercher(){
         return this.clientService.recherche();
     }
+    @GetMapping(path = "{id}",produces = "application/json")
+    public Client lire(@PathVariable int id){
+        return this.clientService.lire(id);
+    }
 
 }

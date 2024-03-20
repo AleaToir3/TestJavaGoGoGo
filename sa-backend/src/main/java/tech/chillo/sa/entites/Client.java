@@ -8,6 +8,8 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    //verification de email unique 3 facon de faire ici ou dans le sql "EMAIL varchar(50) UNIQUE" ou verifier dans le service
+    @Column(unique = true)
     private String email;
 
     public Client() {

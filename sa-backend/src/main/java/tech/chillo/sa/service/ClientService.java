@@ -6,6 +6,7 @@ import tech.chillo.sa.entites.Client;
 import tech.chillo.sa.repository.ClientRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientService {
@@ -16,9 +17,21 @@ private ClientRepository clientRepository;
     }
 
     public void creer(Client client) {
-        this.clientRepository.save(client);
+        Client clientDansLaBDD = this.clientRepository.findByEmail(client.getEmail());
+        if(clientDansLaBDD == null ) {
+            this.clientRepository.save(client);
+        }
     }
     public List<Client>recherche(){
         return this.clientRepository.findAll();
+    }
+
+    public Client lire(int id) {
+        Optional<Client> optionalClient =this.clientRepository.findById(id);
+        if(optionalClient.isPresent() && optionalClient.isEmpty() ){
+             return optionalClient.get();
+        }else {
+            return null;
+        }
     }
 }
