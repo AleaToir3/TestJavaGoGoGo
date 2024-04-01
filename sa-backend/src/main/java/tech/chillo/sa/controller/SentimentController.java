@@ -3,6 +3,7 @@ package tech.chillo.sa.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Sentiment;
+import tech.chillo.sa.enums.TypeSentiment;
 import tech.chillo.sa.repository.SentimentRepository;
 import tech.chillo.sa.service.SentimentService;
 
@@ -18,12 +19,12 @@ public class SentimentController {
     }
 @ResponseStatus(HttpStatus.CREATED)
 @PostMapping( consumes = "application/json")
-public void creer(@RequestBody  Sentiment sentiment){
-        this.sentimentService.cree(sentiment);
-    }
-    @GetMapping
-    public @ResponseBody List<Sentiment>recherche(){
-        return this.sentimentService.rechercher();
+public void creer(@RequestBody  Sentiment sentiment) {
+    this.sentimentService.cree(sentiment);
+}
+    @GetMapping()
+    public @ResponseBody List<Sentiment>recherche(@RequestParam(required = false)TypeSentiment type){
+        return this.sentimentService.rechercher(type);
     }
     @DeleteMapping(path = "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
