@@ -1,6 +1,5 @@
 package tech.chillo.sa.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.chillo.sa.entites.Client;
 import tech.chillo.sa.repository.ClientRepository;
@@ -27,11 +26,18 @@ private ClientRepository clientRepository;
     }
 
     public Client lire(int id) {
-        Optional<Client> optionalClient =this.clientRepository.findById(id);
-        if(optionalClient.isPresent() && optionalClient.isEmpty() ){
-             return optionalClient.get();
+         Optional<Client> optionalClient =this.clientRepository.findById(id);
+        if(optionalClient.isPresent() && !optionalClient.isEmpty() ){
+            return optionalClient.get();
         }else {
-            return null;
+             return null;
         }
+    }
+    public Client lireOuCreer(Client clientAcreer){
+        Client clientDansLaBDD = this.clientRepository.findByEmail(clientAcreer.getEmail());
+        if(clientDansLaBDD == null ) {
+            clientDansLaBDD=  this.clientRepository.save(clientAcreer);
+        }
+        return clientDansLaBDD;
     }
 }
