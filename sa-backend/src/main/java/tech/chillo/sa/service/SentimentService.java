@@ -26,4 +26,9 @@ public class SentimentService {
     public List<Sentiment> rechercher() {
         return this.sentimentRepository.findAll();
     }
+
+
+    public void supprimer(int id) {
+        this.sentimentRepository.deleteById(id);
+    }
 }

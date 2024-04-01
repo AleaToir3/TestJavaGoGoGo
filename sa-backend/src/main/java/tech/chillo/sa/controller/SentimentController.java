@@ -25,5 +25,10 @@ public void creer(@RequestBody  Sentiment sentiment){
     public @ResponseBody List<Sentiment>recherche(){
         return this.sentimentService.rechercher();
     }
+    @DeleteMapping(path = "{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void supprimer(@PathVariable int id){
+        this.sentimentService.supprimer(id);
+    }
     
 }
