@@ -1,11 +1,14 @@
 package tech.chillo.sa.service;
 
+import jakarta.persistence.EntityNotFoundException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import tech.chillo.sa.entites.Client;
 import tech.chillo.sa.entites.Sentiment;
 import tech.chillo.sa.enums.TypeSentiment;
 import tech.chillo.sa.repository.SentimentRepository;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 @Service
@@ -32,6 +35,7 @@ public class SentimentService {
     }
 
     public List<Sentiment> rechercher(TypeSentiment type) {
+
         if(type == null){
             return this.sentimentRepository.findAll();
         }else{
@@ -41,6 +45,13 @@ public class SentimentService {
 
 
     public void supprimer(int id) {
-        this.sentimentRepository.deleteById(id);
+        if (!this.sentimentRepository.existsById(id)) {
+            throw new EntityNotFoundException("L'entité avec l'ID " + id + " n'existe pas et ne peut être supprimée.");
+        }
+        try {
+            this.sentimentRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Une erreur est survenue lors de la suppression de l'entité.", e);
+        }
     }
 }
